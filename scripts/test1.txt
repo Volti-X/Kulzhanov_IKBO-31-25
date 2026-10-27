@@ -1,0 +1,5 @@
+// Комментарий, C++
+ls
+cd /home/user
+unknown_command
+exit

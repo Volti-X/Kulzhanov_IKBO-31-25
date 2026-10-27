@@ -25,6 +25,12 @@
     <None Include=".gitignore" />
     <None Include="pract1.md" />
     <None Include="README.md" />
+    <None Include="scripts\run_test_script_only.bat" />
+    <None Include="scripts\run_test_with_vfs.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="scripts\test1.txt" />
+    <Text Include="scripts\test2.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

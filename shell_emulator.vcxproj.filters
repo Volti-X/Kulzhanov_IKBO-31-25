@@ -23,5 +23,15 @@
     <None Include=".gitignore" />
     <None Include="pract1.md" />
     <None Include="README.md" />
+    <None Include="scripts\run_test_with_vfs.bat">
+      <Filter>Исходные файлы</Filter>
+    </None>
+    <None Include="scripts\run_test_script_only.bat">
+      <Filter>Исходные файлы</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="scripts\test1.txt" />
+    <Text Include="scripts\test2.txt" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,3 @@
+// Скрипт без exit
+ls -la
+cd /etc/config
