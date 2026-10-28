@@ -5,7 +5,7 @@ echo ========================================
 echo SCRIPT ONLY (NO VFS)
 echo ========================================
 echo.
-"x64\Debug\shell_emulator.exe" --script scripts/test2.txt
+"x64\Debug\shell_emulator.exe" --script tests/test2.txt
 echo.
 
 pause

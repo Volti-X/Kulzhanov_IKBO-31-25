@@ -34,12 +34,9 @@
     <None Include="scripts\run_test_with_vfs.bat" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="scripts\test1.txt" />
-    <Text Include="scripts\test2.txt" />
-    <Text Include="scripts\test_stage3.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\json.hpp" />
+    <Text Include="tests\test1.txt" />
+    <Text Include="tests\test2.txt" />
+    <Text Include="tests\test_stage3.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
