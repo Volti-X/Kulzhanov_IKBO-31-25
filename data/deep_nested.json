@@ -1,0 +1,36 @@
+{
+  "name": "deep_vfs",
+  "root": {
+    "type": "dir",
+    "children": {
+      "motd": {
+        "type": "file",
+        "data": "Welcome to Deep VFS!"
+      },
+      "projects": {
+        "type": "dir",
+        "children": {
+          "university": {
+            "type": "dir",
+            "children": {
+              "os_emulator": {
+                "type": "dir",
+                "children": {
+                  "src": {
+                    "type": "dir",
+                    "children": {
+                      "main.cpp": {
+                        "type": "file",
+                        "data": "int main() { return 0; }"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

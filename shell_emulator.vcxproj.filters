@@ -29,9 +29,24 @@
     <None Include="scripts\run_test_script_only.bat">
       <Filter>Исходные файлы</Filter>
     </None>
+    <None Include="data\minimal.json" />
+    <None Include="data\multiple_files.json" />
+    <None Include="data\deep_nested.json" />
+    <None Include="scripts\run_test_deep.bat">
+      <Filter>Исходные файлы</Filter>
+    </None>
+    <None Include="scripts\run_test_multi.bat">
+      <Filter>Исходные файлы</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="scripts\test1.txt" />
     <Text Include="scripts\test2.txt" />
+    <Text Include="scripts\test_stage3.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\json.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

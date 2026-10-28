@@ -1,0 +1,11 @@
+// Тестирование Этапа 3
+ls
+cd projects
+ls
+cd university
+ls
+cd /not_existing_folder
+cd /
+ls
+unknown_command
+exit

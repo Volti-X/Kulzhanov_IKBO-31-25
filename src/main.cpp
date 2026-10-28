@@ -4,8 +4,71 @@
 #include <string>
 #include <vector>
 #include <windows.h>
+#include "json.hpp"
 
 using namespace std;
+
+struct VfsNode {
+    string name;
+    bool isDir = true;
+    string data = "";
+    vector<VfsNode> children;
+};
+
+VfsNode vfsRoot;
+VfsNode currentDir;
+string vfsName = "my_vfs";
+bool isVfsLoaded = false;
+
+VfsNode parseNode(const string& name, const nlohmann::json& j) {
+    VfsNode node;
+    node.name = name;
+
+    if (j.contains("type") && j["type"] == "file") {
+        node.isDir = false;
+        if (j.contains("data"))
+            node.data = j["data"];
+    }
+    else {
+        if (j.contains("children")) {
+            for (auto it = j["children"].begin(); it != j["children"].end(); ++it) {
+                node.children.push_back(parseNode(it.key(), it.value()));
+            }
+        }
+    }
+    return node;
+}
+
+bool loadVfs(const string& path) {
+    ifstream file(path);
+    if (!file.is_open()) {
+        cerr << "Error: Cannot open VFS file: " << path << "\n";
+        return false;
+    }
+    try {
+        nlohmann::json j;
+        file >> j;
+        if (j.contains("name"))
+            vfsName = j["name"];
+
+        if (j.contains("root")) {
+            vfsRoot = parseNode("root", j["root"]);
+            currentDir = vfsRoot;
+        }
+        for (size_t i = 0; i < vfsRoot.children.size(); ++i) {
+            if (vfsRoot.children[i].name == "motd" && !vfsRoot.children[i].isDir) {
+                cout << "\n[MOTD]:\n" << vfsRoot.children[i].data << "\n\n";
+                break;
+            }
+        }
+        isVfsLoaded = true;
+        return true;
+    }
+    catch (const exception& e) {
+        cerr << "Error parsing JSON: " << e.what() << "\n";
+        return false;
+    }
+}
 
 void processCmd(const vector<string>& tokens) {
     if (tokens.empty()) return;
@@ -15,24 +78,48 @@ void processCmd(const vector<string>& tokens) {
     if (command == "exit") {
         exit(0);
     }
-    else if (command == "ls" || command == "cd") {
-        cout << "command: " << command;
-        if (tokens.size() > 1) {
-            cout << " | arguments: ";
-            for (size_t i = 1; i < tokens.size(); ++i) {
-                cout << tokens[i] << " ";
+    else if (command == "ls") {
+        if (!isVfsLoaded) {
+            cout << "Error: No VFS loaded\n";
+            return;
+        }
+        for (size_t i = 0; i < currentDir.children.size(); ++i) {
+            cout << currentDir.children[i].name;
+            if (currentDir.children[i].isDir) {
+                cout << "/";
+            }
+            cout << "\n";
+        }
+    }
+    else if (command == "cd") {
+        if (tokens.size() < 2) {
+            cout << "cd: missing argument\n";
+            return;
+        }
+        string target = tokens[1];
+
+        if (target == "/" || target == "\\") {
+            currentDir = vfsRoot;
+            return;
+        }
+
+        bool found = false;
+        for (size_t i = 0; i < currentDir.children.size(); ++i) {
+            if (currentDir.children[i].name == target && currentDir.children[i].isDir) {
+                currentDir = currentDir.children[i];
+                found = true;
+                break;
             }
         }
-        else {
-            cout << " | no arguments";
+
+        if (!found) {
+            cout << "cd: no such directory: " << target << "\n";
         }
-        cout << "\n";
     }
     else {
         cout << "command not found: " << command << "\n";
     }
 }
-
 
 vector<string> parseInput(const string& line) {
     vector<string> tokens;
@@ -47,7 +134,6 @@ vector<string> parseInput(const string& line) {
 int main(int argc, char* argv[]) {
     SetConsoleOutputCP(65001);
     SetConsoleCP(65001);
-    string vfsName = "my_vfs";
     string vfsPath = "";
     string scriptPath = "";
 
@@ -65,6 +151,15 @@ int main(int argc, char* argv[]) {
     cout << "VFS Path: " << (vfsPath.empty() ? "not set" : vfsPath) << "\n";
     cout << "Script Path: " << (scriptPath.empty() ? "not set" : scriptPath) << "\n";
     cout << "=====================" << "\n";
+
+    if (!vfsPath.empty()) {
+        if (!loadVfs(vfsPath)) {
+            return 1;
+        }
+    }
+    else {
+        cout << "Warning: No VFS loaded. Commands will be limited.\n";
+    }
 
     if (!scriptPath.empty()) {
         ifstream scriptFile(scriptPath);

@@ -23,14 +23,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+    <None Include="data\deep_nested.json" />
+    <None Include="data\minimal.json" />
+    <None Include="data\multiple_files.json" />
     <None Include="pract1.md" />
     <None Include="README.md" />
+    <None Include="scripts\run_test_deep.bat" />
+    <None Include="scripts\run_test_multi.bat" />
     <None Include="scripts\run_test_script_only.bat" />
     <None Include="scripts\run_test_with_vfs.bat" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="scripts\test1.txt" />
     <Text Include="scripts\test2.txt" />
+    <Text Include="scripts\test_stage3.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\json.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

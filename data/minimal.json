@@ -1,0 +1,21 @@
+{
+  "name": "my_vfs",
+  "root": {
+    "type": "dir",
+    "children": {
+      "motd": {
+        "type": "file",
+        "data": "Welcome to Virtual File System!"
+      },
+      "home": {
+        "type": "dir",
+        "children": {
+          "user": {
+            "type": "dir",
+            "children": {}
+          }
+        }
+      }
+    }
+  }
+}
